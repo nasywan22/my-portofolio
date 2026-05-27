@@ -1,22 +1,28 @@
-import { Index, JSX, Show } from "solid-js";
+import { createSignal, Index, JSX, Show } from "solid-js";
 
 export default function TabManagement (): JSX.Element
 {
-    const tabs = Array.of(
-        { name: "About Me", isActive: true },
-        { name: "Project List", isActive: false}
-    );
+    const [tabs, setTabs] = createSignal
+    (
+        Array.of
+        (
+            { name: "About Me", isActive: true },
+            { name: "Project List", isActive: false}
+        )
+    )
+
+    const handleTabClick = (tabIndex: number) => setTabs(prevTabs => prevTabs.map((t, i) => ({...t, isActive: i === tabIndex ? true : false})))
 
     return (
         <>
-            <Index each={tabs}>
+            <Index each={tabs()}>
                 {(t, i) => 
                     (
                         <>
                             <h6
                                 class='no-underline font-sans text-sm antialiased text-[#6EACDA] hover:text-[#E2E2B6] transition-colors duration-300'
                                 classList={{"text-[#E2E2B6]": t().isActive}}
-                                
+                                onClick={() => handleTabClick(i)}
                             >
                                 {t().name}
                             </h6>
