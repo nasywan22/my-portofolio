@@ -1,4 +1,5 @@
 import { createSignal, Index, JSX, Show } from "solid-js";
+import { changeCurrentActiveContent } from "../../contents/ContentManagement";
 
 export default function TabManagement (): JSX.Element
 {
@@ -11,7 +12,11 @@ export default function TabManagement (): JSX.Element
         )
     )
 
-    const handleTabClick = (tabIndex: number) => setTabs(prevTabs => prevTabs.map((t, i) => ({...t, isActive: i === tabIndex ? true : false})))
+    const handleTabClick = (tabIndex: number) => 
+    {
+        setTabs(prevTabs => prevTabs.map((t, i) => ({...t, isActive: i === tabIndex ? true : false})))
+        changeCurrentActiveContent(tabIndex)
+    }
 
     return (
         <>
@@ -20,7 +25,7 @@ export default function TabManagement (): JSX.Element
                     (
                         <>
                             <h6
-                                class='no-underline font-sans text-sm antialiased text-[#6EACDA] hover:text-[#E2E2B6] transition-colors duration-300'
+                                class='no-underline font-sans text-sm antialiased text-[#6EACDA] hover:text-[#E2E2B6] transition-colors duration-300 cursor-pointer'
                                 classList={{"text-[#E2E2B6]": t().isActive}}
                                 onClick={() => handleTabClick(i)}
                             >
